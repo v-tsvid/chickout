@@ -1,0 +1,52 @@
+.row-fluid
+  .col-md-12
+    %h4
+      = t("ordr")
+      = checkout_form.model.decorate.number
+.row-fluid 
+  = render partial: 'order_full_address', 
+    locals: {sym: :billing_address, view: view, checkout_form: checkout_form}
+
+  = render partial: 'order_full_address', 
+    locals: {sym: :shipping_address, view: view, checkout_form: checkout_form}
+
+  .col-md-3
+    %h4 
+      = t("checkout.order.full.shipment")
+      = render partial: 'edit_if_confirm', locals: {view: view, step: :shipment}
+    - item = checkout_form.model
+    %p= item.shipping_method
+    %p
+      = PriceDecorator.decorate(item.shipping_price).price
+    %br/
+
+  .col-md-3
+    %h4
+      = t("checkout.order.full.payment")
+      = render partial: 'edit_if_confirm', locals: {view: view, step: :payment}
+    - item = checkout_form.model.credit_card
+    %p= item.decorate.number
+    %p= "#{item.expiration_month}/#{item.expiration_year}"
+    %br/
+
+.row-fluid
+  .col-md-12
+    - item = checkout_form.model
+    %table.table
+      = render 'shared/order_table_head', extra_col: false
+
+      %tbody
+        - item.order_items.each do |item|
+          = render partial: 'cart_item', locals: {cart_item: item}
+        = render partial: 'order_summary', locals: {item: item}
+.row-fluid
+  .col-md-12
+    - if view == 'confirm'
+      = form_for(checkout_form, url: wizard_path, 
+        html: { method: :put }) do |checkout_form|
+        .actions
+          = checkout_form.submit t("checkout.place_order"), 
+            class: "btn btn-warning"
+    - else
+      = button_to t("checkout.back_to_store"), books_path, method: :get, 
+        class: "btn btn-warning"

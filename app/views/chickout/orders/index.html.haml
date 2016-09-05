@@ -1,0 +1,27 @@
+.row-fluid
+  .col-md-8.col-md-offset-2
+    - @state = Order::STATE_LIST[0]
+    %h4= t("orders_page.#{@state}")
+    - @order = current_order
+    
+    - if @order
+      %table.table
+        = render 'shared/order_table_head', extra_col: true
+
+        %tbody
+          - @order.order_items.each do |item|
+            = render partial: 'checkouts/cart_item', locals: {cart_item: item}
+          = render 'shared/order_table_body', order: @order
+
+      = link_to t("checkout.to_cart"), cart_path, class: 'btn btn-warning'
+      %br/
+    
+    - else
+      %p= t("orders_page.no_orders")
+
+    - Order::STATE_LIST.drop(1).each do |state|
+      .row-fluid
+        %br/
+        %h4= t("orders_page.#{state}")
+        = render partial: 'orders_list', 
+          locals: {orders: actual_orders(@orders, state)}

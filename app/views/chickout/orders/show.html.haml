@@ -1,0 +1,19 @@
+.row-fluid
+  .col-md-8.col-md-offset-2
+    .row
+      .col-md-6
+        %table
+          %tbody
+            %tr
+              %td
+                %h4= "#{t :ordr} #{@order.decorate.number}"
+              %td
+                %p= "(#{t("orders_page.#{@order.state}")})"
+
+    %table.table
+      = render 'shared/order_table_head', extra_col: false
+
+      %tbody
+        - @order.order_items.each do |item|
+          = render partial: 'checkouts/cart_item', locals: {cart_item: item}
+        = render partial: "checkouts/order_summary", locals: {item: @order}

@@ -1,0 +1,45 @@
+= render layout: 'step' do
+  - billing_address = @checkout_form.model.billing_address
+  - shipping_address = @checkout_form.model.shipping_address
+
+  = form_for @checkout_form, url: wizard_path, 
+    html: { method: :put } do |checkout_form|
+    = checkout_form.fields_for(:model, @checkout_form.model) do |model|
+      - @attrs = flash['attrs'] || nil_addresses
+      
+      .row-fluid
+        .col-md-3
+          %h4= t("addresses.billing_address")
+          = label_tag nil, nil, transparent: true
+          #billing_form
+            = render 'address_form', model: model, address: billing_address, 
+              addr: 'billing_address', attrs: @attrs['billing_address'], 
+              default_country: billing_address.try(:country_id)
+            %br/
+
+        .col-md-3.col-md-offset-1
+          %h4= t("addresses.shipping_address")
+          - if addresses_is_equal?(billing_address, shipping_address)
+            = check_box_tag 'use_billing', 'use billing', true 
+          - else
+            = check_box_tag 'use_billing', 'use billing', false
+          = label_tag t("addresses.use_billing"), nil, 
+            class: 'label label-default'
+
+          #shipping_form
+            = render 'address_form', model: model, address: shipping_address, 
+              addr: 'shipping_address', attrs: @attrs['shipping_address'], 
+              default_country: shipping_address.try(:country_id)
+        
+        .col-md-3.col-md-offset-1
+          %h4.center= t("checkout.order.summary")
+          %table
+            %body
+              = render partial: "order_summary", 
+                locals: {item: @checkout_form.model}  
+      
+      .row-fluid
+        .col-md-3
+          .actions
+            = checkout_form.submit t("checkout.save_and_continue"), 
+              class: 'btn btn-warning'

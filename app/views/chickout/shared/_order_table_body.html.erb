@@ -1,0 +1,11 @@
+<tr>
+  <td colspan="2"></td>
+  <td colspan="2">
+    <div class="cart-left-col">
+      <%= "#{t("checkout.order.subtotal")}: " %>
+    </div>
+  </td>
+  <td class="cart-right-col">
+    <%= Chickout::PriceDecorator.decorate(order.send(:update_subtotal)).price %>
+  </td>
+</tr>

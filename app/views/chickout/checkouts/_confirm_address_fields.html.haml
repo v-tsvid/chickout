@@ -1,0 +1,14 @@
+%p 
+  = item.firstname 
+  = item.lastname
+%p= item.address1
+- if item.address2
+  %p= item.address2
+%p
+  = item.city
+  = item.zipcode
+%p= item.country.name
+%p
+  = t("addresses.phone")
+  = item.phone
+%br/

@@ -1,0 +1,22 @@
+<tr>
+  <td class="cart-title-col">
+    <%= link_to "#{item.product.title}", main_app.send("#{product_sym}_path", item.product_id) %>
+  </td>
+  <td class="cart-right-col-thin">
+    <%= Chickout::PriceDecorator.decorate(item.product.price).price %>
+  </td>
+  <td>
+    <%= number_field_tag "items_attrs[][quantity]", item.quantity, min: 1, class: 'form-control' %>
+    <%= hidden_field_tag "items_attrs[][product_id]", item.product_id %>
+  </td>
+  <td class="cart-right-col">
+    <%= label_tag "items_attrs[][price]", Chickout::PriceDecorator.decorate(item.price).price %>
+  </td>
+  <td>
+    <% if current_order %>
+      <%= link_to t("checkout.remove"), item,  method: :delete, class: 'btn btn-danger' %>
+    <% else %>
+      <%= link_to t("checkout.remove"), url_for(controller: 'items', action: 'delete_from_cookies', product_id: item.product_id), method: :delete, class: 'btn btn-danger' %>
+    <% end %>
+  </td>
+</tr>

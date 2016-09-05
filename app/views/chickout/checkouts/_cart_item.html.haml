@@ -1,0 +1,10 @@
+%tr.default
+  %td= image_tag cart_item.book.images.url, size: '30x40'
+  %td.cart-title-col
+    = link_to "#{cart_item.book.title}", cart_item.book
+  %td.cart-price-col
+    = PriceDecorator.decorate(cart_item.book.price).price
+  %td.cart-quantity-col
+    = cart_item.quantity
+  %td.cart-total-col
+    = PriceDecorator.decorate(cart_item.price).price

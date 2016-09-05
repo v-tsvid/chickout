@@ -1,0 +1,9 @@
+- order_summary = OrderSummary.new(item)
+- [:subtotal, :discount, :shipping_price, :total_price].each do |row|
+  %tr
+  %td{colspan: '2'}
+  %td{colspan: '2'}
+    .summary-left-col
+      = order_summary.public_send(row)[:tag]
+  %td.summary-right-col
+    = order_summary.public_send(row)[:price]

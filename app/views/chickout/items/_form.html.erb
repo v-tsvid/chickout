@@ -1,0 +1,20 @@
+<table class="table">
+  <%= render 'chickout/shared/order_table_head', extra_col: true %>
+  <tbody>
+    <%= render order.items %>
+    <%= render 'chickout/shared/order_table_body', order: order %>
+  </tbody>
+</table>
+<div class="row">
+  <div class="col-md-6">
+    <%= link_to t("checkout.continue_shopping"), route_index_helper(product_sym), class: 'btn btn-warning' %>
+    <% if current_order %>
+      <%= link_to t("checkout.empty_cart"), order, method: :delete, data: { confirm: t(:confirm) }, class: 'btn btn-danger' %>
+    <% else %>
+      <%= link_to t("checkout.empty_cart"), url_for(controller: 'orders', action: 'destroy_cookies'), method: :delete, data: { confirm: t(:confirm) },class: 'btn btn-danger' %>
+    <% end %>
+  </div>
+  <div class="col-md-2 col-md-offset-4 col-righted">
+    <%= submit_tag t("checkout.update_cart"), class: 'btn btn-warning' %>
+  </div>
+</div>

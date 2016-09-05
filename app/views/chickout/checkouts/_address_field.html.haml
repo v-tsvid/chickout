@@ -1,0 +1,8 @@
+- attr_val = attrs[attr_sym.to_s] if attrs
+
+- if attr_val
+  = f.text_field(attr_sym, placeholder: t("addresses.#{attr_sym}"), 
+    value: attr_val, class: 'form form-control')
+- else
+  = f.text_field(attr_sym, placeholder: t("addresses.#{attr_sym}"), 
+    class: 'form form-control')

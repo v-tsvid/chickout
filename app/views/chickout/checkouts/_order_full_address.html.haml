@@ -1,0 +1,6 @@
+.col-md-3
+  %h4 
+    = t("checkout.order.full.#{sym.to_s}")
+    = render partial: 'edit_if_confirm', locals: {view: view, step: :address}
+  - item = checkout_form.model.public_send(sym)
+  = render partial: 'confirm_address_fields', locals: {item: item}

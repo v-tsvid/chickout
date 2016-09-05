@@ -1,0 +1,19 @@
+%table.table.orders-list
+  %thead
+    %tr.active
+      %th= t("orders_page.number")
+      %th= t("orders_page.completed")
+      %th= t("orders_page.total")
+      %th
+
+  %tbody
+    - if orders.empty?
+      %tr
+        %td{colspan: '3'}= t("orders_page.no_orders")
+    - else
+      - orders.each do |order|
+        %tr
+          %td= order.decorate.number
+          %td= order.decorate.completed_date
+          %td= PriceDecorator.decorate(order.total_price).price
+          %td= link_to t("orders_page.view"), order

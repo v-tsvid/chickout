@@ -1,0 +1,25 @@
+= render layout: 'step' do
+  
+  .row-fluid
+    .col-md-3
+      %h4= t("shipping_method")
+      = form_for @checkout_form, url: wizard_path, 
+        html: { method: :put } do |checkout_form|
+        = checkout_form.fields_for(:model, @checkout_form.model) do |model|
+          - @current_method = @checkout_form.model.shipping_method
+          
+          - Order::SHIPPING_METHOD_LIST.each do |method|
+            = render partial: 'shipping_method_field', 
+              locals: {model: model, method: method, 
+              current_method: @current_method, checkout_form: @checkout_form}
+          
+        .actions
+          = checkout_form.submit t("checkout.save_and_continue"), 
+            class: 'btn btn-warning'
+
+    .col-md-3.col-md-offset-5
+      %h4.center= t("checkout.order.summary")
+      %table
+        %body
+          = render partial: "order_summary", 
+            locals: {item: @checkout_form.model}

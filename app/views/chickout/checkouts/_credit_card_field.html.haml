@@ -1,0 +1,10 @@
+- attr_val = attrs[attr_sym.to_s] if attrs
+- if attr_sym == :expiration_month
+  = render partial: 'month_field', 
+      locals: {f: f, attr_val: attr_val, attr_sym: attr_sym}
+- elsif attr_sym == :expiration_year
+  = render partial: 'year_field', 
+    locals: {f: f, attr_val: attr_val, attr_sym: attr_sym}
+- else
+  = render partial: 'other_card_field', 
+    locals: {f: f, attr_val: attr_val, attr_sym: attr_sym}

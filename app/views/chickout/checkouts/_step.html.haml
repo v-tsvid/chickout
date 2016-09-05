@@ -1,0 +1,11 @@
+.row-fluid
+  .col-md-10.col-md-offset-1
+    %u.nav.nav-tabs
+      - [:address, :shipment, :payment, :confirm, :complete].each do |item|
+        = render partial: 'step_navtab', 
+          locals: { item: item, next_step: @checkout_form.model.next_step }
+
+.row-fluid
+  .col-md-10.col-md-offset-1
+    %br/
+    = yield

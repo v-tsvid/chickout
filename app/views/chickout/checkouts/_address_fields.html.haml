@@ -1,0 +1,11 @@
+%br/
+- if flash[:errors] && flash[:errors]["#{addr}.#{attr_sym}"]
+  .has-error
+    = render partial: 'address_field', 
+      locals: {f: f, attrs: attrs, attr_sym: attr_sym}
+    %span.help-block
+      = address_errors_list(flash[:errors], addr, attr_sym)
+- else
+  %div
+    = render partial: 'address_field', 
+      locals: {f: f, attrs: attrs, attr_sym: attr_sym}

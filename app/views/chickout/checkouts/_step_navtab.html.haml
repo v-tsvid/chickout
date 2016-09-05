@@ -1,0 +1,7 @@
+- @text = t("checkout.tabs.#{item}")
+- if link_inaccessible?(next_step, item)
+  %li{role: "presentation", class: "disabled"}
+    = link_to @text
+- else  
+  %li{role: "presentation", class: (step == item ? "active" : nil)}
+    = link_to @text, checkout_path(item)

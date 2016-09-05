@@ -1,0 +1,4 @@
+- year = @checkout_form.model.credit_card.expiration_year
+= f.select(:expiration_year, 
+  options_for_select(years_for_select, (year || attr_val)), 
+  {:prompt => t("checkout.select_year")}, {class: "form-control"})

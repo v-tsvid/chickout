@@ -1,0 +1,24 @@
+= model.fields_for addr.to_sym, address  do |addr_f|
+  - [:firstname, 
+     :lastname, 
+     :phone, 
+     :address1, 
+     :address2, 
+     :city, 
+     :zipcode].each do |item|
+    .field
+      = render partial: 'address_fields', 
+        locals: {f: addr_f, addr: addr, attrs: attrs, attr_sym: item}
+
+  .field
+    = addr_f.hidden_field :billing_address_for_id
+
+  .field
+    = addr_f.hidden_field :shipping_address_for_id
+
+  .field
+    %br/
+    - attr = attrs['country_id'] if attrs
+    = addr_f.select(:country_id, options_for_select(countries_for_select, 
+      (attr.nil? ? default_country : attr)), {}, {class: "form-control"})
+    %br/

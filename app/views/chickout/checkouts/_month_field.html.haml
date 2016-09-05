@@ -1,0 +1,4 @@
+- month = @checkout_form.model.credit_card.expiration_month
+= f.select(:expiration_month, 
+  options_for_select(months_for_select, (month || attr_val)), 
+  {prompt: t("checkout.select_month")}, {class: "form-control"})
